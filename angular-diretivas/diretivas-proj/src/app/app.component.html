@@ -1,1 +1,12 @@
-<app-card></app-card>
+<app-comp-atributos>
+    <h2>olá </h2>
+    <p>eu vim de fora</p>
+</app-comp-atributos>
+
+<app-card *ngIf="isAliveCard; else anotherBlock"></app-card>
+
+<ng-template #anotherBlock>
+    <p>olá sou um bloco condicional</p>
+</ng-template>
+
+<router-outlet></router-outlet>
