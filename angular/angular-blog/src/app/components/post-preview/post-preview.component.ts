@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./post-preview.component.css']
 })
 export class PostPreviewComponent {
-  @Input() id: string = "";
+  @Input() id: number = 0;
   @Input() titulo: string = "";
   @Input() subTitulo: string = "";
   @Input() autor: string = "";
