@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="box_top">
+        <h1>Escolha uma categoria</h1>
+    </div>
+
+    <ul>
+        <li *ngFor="let dados of listCategorias">
+            <a [routerLink]="['/match', dados.id]"> {{dados.categoria}}</a>
+        </li>
+    </ul>
+</div>
