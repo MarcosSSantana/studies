@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import quizz from 'src/assets/data/quizz_questions.json';
-import { Question } from 'src/assets/interface/quizz.interface';
+import { ActivatedRoute } from '@angular/router';
+import Opcao from 'src/assets/data/match_words.json';
+import { Categoria } from 'src/assets/interface/match.interface';
 
 @Component({
   selector: 'app-match',
@@ -9,31 +10,26 @@ import { Question } from 'src/assets/interface/quizz.interface';
 })
 export class MatchComponent implements OnInit {
   title: string = "";
-  questions!: Question[];
-  questionSelected!: Question;
-
-  answers: string[] = [];
-  answerSelected: string = "";
-
-  questionIndex: number = 0;
-  questionMaxIndex: number = 0;
-
-  finished: boolean = false;
+  categoria?: Categoria;
+  id: number = 0;
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    if (quizz) {
-      this.questions = quizz.questions;
+    let idParam = this.route.snapshot.paramMap.get('id')
+    this.id = parseInt(idParam || "");
 
-      this.title = quizz.title;
-      this.questionSelected = this.questions[this.questionIndex];
+    if (Opcao) {
+      this.categoria = Opcao.categorias.find(categoria =>categoria.id === this.id);
 
-      this.questionMaxIndex = this.questions.length;
+      console.log(this.categoria);
+      if(this.categoria){
+        this.title = this.categoria?.categoria
+
+      }
+
     }
   }
 
-  playerChoose(value: string) {
-    this.answers.push(value);
-  }
 
 
 }
