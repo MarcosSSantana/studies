@@ -5,7 +5,7 @@ import { MatchComponent } from './pages/match/match.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
 
 const routes: Routes = [
-  {path:'', redirectTo:'/match', pathMatch:'full'},
+  {path:'', redirectTo:'/categorias', pathMatch:'full'},
   {path:'quiz', component:QuizComponent},
   {path:'match/:id', component:MatchComponent},
   {path:'categorias', component:CategoriasComponent}

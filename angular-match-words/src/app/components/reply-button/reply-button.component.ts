@@ -7,4 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ReplyButtonComponent {
   @Input() texto: string = "";
+  @Input() classe: string = "";
+  @Input() isDisabled: boolean = false;
 }

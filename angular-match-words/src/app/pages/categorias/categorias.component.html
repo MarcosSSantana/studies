@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="box_top">
+    <div class="text-center p-2">
         <h1>Escolha uma categoria</h1>
     </div>
 
-    <div>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
 
         <a *ngFor="let dados of listCategorias" [routerLink]="['/match', dados.id]">
             <app-reply-button [texto]="dados.categoria"></app-reply-button>
