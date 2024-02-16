@@ -13,21 +13,22 @@ export class MatchComponent implements OnInit {
   categoria?: Categoria;
   id: number = 0;
   pontos: number = 0;
+  acertos: number = 0;
   isDisabled = true;
   columnLeft = [
-    { id: 0, texto: 'txt pt', classe: '', check: true },
-    { id: 1, texto: 'txt pt', classe: '', check: true },
-    { id: 2, texto: 'txt pt', classe: '', check: true },
-    { id: 3, texto: 'txt pt', classe: '', check: true },
-    { id: 4, texto: 'txt pt', classe: '', check: true },
+    { id: 0, texto: '', classe: '', check: true },
+    { id: 1, texto: '', classe: '', check: true },
+    { id: 2, texto: '', classe: '', check: true },
+    { id: 3, texto: '', classe: '', check: true },
+    { id: 4, texto: '', classe: '', check: true },
   ];
 
   columnRight = [
-    { id: 0, texto: 'txt en', classe: '', check: true },
-    { id: 1, texto: 'txt en', classe: '', check: true },
-    { id: 2, texto: 'txt en', classe: '', check: true },
-    { id: 3, texto: 'txt en', classe: '', check: true },
-    { id: 4, texto: 'txt en', classe: '', check: true },
+    { id: 0, texto: '', classe: '', check: true },
+    { id: 1, texto: '', classe: '', check: true },
+    { id: 2, texto: '', classe: '', check: true },
+    { id: 3, texto: '', classe: '', check: true },
+    { id: 4, texto: '', classe: '', check: true },
   ];
 
   choices = {
@@ -46,24 +47,35 @@ export class MatchComponent implements OnInit {
         (categoria) => categoria.id === this.id
       );
 
-      if (this.categoria) {
-        this.title = this.categoria?.categoria;
-        this.categoria.options.sort(() => Math.random() - 0.5);
-        let novoArray = this.categoria.options.slice(0, 5);
+      this.setWords();
+    }
+  }
 
-        this.columnLeft.forEach((item, i) => {
-          item.texto = novoArray[i].pt;
-          item.id = novoArray[i].id;
-        });
+  setWords() {
+    if (this.categoria) {
+      this.acertos = 0;
+      this.title = this.categoria?.categoria;
+      this.categoria.options.sort(() => Math.random() - 0.5);
 
-        novoArray.sort(() => Math.random() - 0.5);
+      let novoArray = this.categoria.options.slice(0, 5);
 
-        this.columnRight.forEach((item, i) => {
-          item.texto = novoArray[i].en;
-          item.id = novoArray[i].id;
-        });
-       
-      }
+      this.columnLeft.forEach((item, i) => {
+        item.texto = novoArray[i].pt;
+        item.id = novoArray[i].id;
+        item.check = true;
+      });
+
+      novoArray.sort(() => Math.random() - 0.5);
+
+      this.columnRight.forEach((item, i) => {
+        item.texto = novoArray[i].en;
+        item.id = novoArray[i].id;
+        item.check = true;
+      });
+
+      console.log(this.categoria.options);
+
+
     }
   }
 
@@ -89,9 +101,8 @@ export class MatchComponent implements OnInit {
     if (this.choices.L.id === this.choices.R.id) {
       //desabilita os dois e marca ponto
       this.pontos++;
+      this.acertos++;
       this.setCheckChoice();
-      console.log(this.columnLeft);
-      
     }
     //desmarca e limpa os ids
     this.clearChoices();
@@ -119,6 +130,7 @@ export class MatchComponent implements OnInit {
   }
 
   setCheckChoice() {
+
     this.columnLeft.forEach(
       (item) =>
         (item.check = item.id === this.choices.L.id ? false : item.check)
@@ -127,5 +139,13 @@ export class MatchComponent implements OnInit {
       (item) =>
         (item.check = item.id === this.choices.R.id ? false : item.check)
     );
+
+    setTimeout(() => {
+      if (this.acertos >= this.columnLeft.length) {
+        this.setWords();
+      }
+    }, 500);
+
+
   }
 }
