@@ -13,8 +13,10 @@ export class MatchComponent implements OnInit {
   categoria?: Categoria;
   id: number = 0;
   pontos: number = 0;
+  erros: number = 0;
   acertos: number = 0;
   isDisabled = true;
+  time:number = 250;
   columnLeft = [
     { id: 0, texto: '', classe: '', check: true },
     { id: 1, texto: '', classe: '', check: true },
@@ -103,6 +105,8 @@ export class MatchComponent implements OnInit {
       this.pontos++;
       this.acertos++;
       this.setCheckChoice();
+    }else{
+      this.erros++;
     }
     //desmarca e limpa os ids
     this.clearChoices();
@@ -110,7 +114,7 @@ export class MatchComponent implements OnInit {
     setTimeout(() => {
       this.clearClasse(this.columnLeft);
       this.clearClasse(this.columnRight);
-    }, 500);
+    }, this.time);
   }
 
   clearChoices() {
@@ -144,7 +148,7 @@ export class MatchComponent implements OnInit {
       if (this.acertos >= this.columnLeft.length) {
         this.setWords();
       }
-    }, 500);
+    }, this.time);
 
 
   }

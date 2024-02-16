@@ -7,6 +7,7 @@ import { QuizComponent } from './pages/quiz/quiz.component';
 import { ReplyButtonComponent } from './components/reply-button/reply-button.component';
 import { MatchComponent } from './pages/match/match.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { CategoriasComponent } from './pages/categorias/categorias.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/mach-words/' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

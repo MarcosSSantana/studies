@@ -1,7 +1,9 @@
 <div class="container">
     <button class="btn btn-outline-light m-3" [routerLink]="['/categorias']">voltar</button>
-    <div class="box_top">
-        <p>{{ title }} pontos : {{pontos}}</p>
+    <div class="box_top m-4">
+        <h1>{{ title }}</h1>
+        <h3>acertos : {{pontos}}</h3>
+        <h3>erros : {{erros}}</h3>
     </div>
 
     <div class="row text-center">
