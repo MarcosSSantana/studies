@@ -5,7 +5,7 @@
 
     <div class="d-flex flex-wrap justify-content-center gap-3">
 
-        <a *ngFor="let dados of listCategorias" [routerLink]="['/match', dados.id]">
+        <a *ngFor="let dados of listCategorias;index as i" [routerLink]="['/match', i]">
             <app-reply-button [texto]="dados.categoria"></app-reply-button>
         </a>
 

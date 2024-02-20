@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { WordsService } from 'src/app/services/words.service';
 import Opcao from 'src/assets/data/match_words.json';
 import { Categoria } from 'src/assets/interface/match.interface';
 
@@ -16,7 +17,7 @@ export class MatchComponent implements OnInit {
   erros: number = 0;
   acertos: number = 0;
   isDisabled = true;
-  time:number = 250;
+  time: number = 250;
   columnLeft = [
     { id: 0, texto: '', classe: '', check: true },
     { id: 1, texto: '', classe: '', check: true },
@@ -38,28 +39,38 @@ export class MatchComponent implements OnInit {
     R: { id: -1, texto: '', classe: '' },
   };
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private service: WordsService) { }
 
   ngOnInit(): void {
+
     let idParam = this.route.snapshot.paramMap.get('id');
     this.id = parseInt(idParam || '');
 
-    if (Opcao) {
-      this.categoria = Opcao.categorias.find(
-        (categoria) => categoria.id === this.id
-      );
+    this.service.getOptions(this.id).subscribe({
+      next: (res) => {
+        this.categoria = res;
+        this.setWords();
+      },
+      error: (res) => console.log(res)
+    })
 
-      this.setWords();
-    }
+    // if (Opcao) {
+    //   this.categoria = Opcao.categorias.find(
+    //     (categoria) => categoria.id === this.id
+    //   );
+
+    //   this.setWords();
+    // }
   }
 
   setWords() {
     if (this.categoria) {
       this.acertos = 0;
       this.title = this.categoria?.categoria;
-      this.categoria.options.sort(() => Math.random() - 0.5);
+      let options: Categoria["options"] = this.categoria.options;
+      options.sort(() => Math.random() - 0.5);
 
-      let novoArray = this.categoria.options.slice(0, 5);
+      let novoArray = options.slice(0, 5);
 
       this.columnLeft.forEach((item, i) => {
         item.texto = novoArray[i].pt;
@@ -75,9 +86,7 @@ export class MatchComponent implements OnInit {
         item.check = true;
       });
 
-      console.log(this.categoria.options);
-
-
+      // console.log(this.categoria.options);
     }
   }
 
@@ -105,7 +114,7 @@ export class MatchComponent implements OnInit {
       this.pontos++;
       this.acertos++;
       this.setCheckChoice();
-    }else{
+    } else {
       this.erros++;
     }
     //desmarca e limpa os ids
